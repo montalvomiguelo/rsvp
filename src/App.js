@@ -9,11 +9,13 @@ class App extends Component {
       guests: [
         {
           name: 'Treasude',
-          isConfirmed: false
+          isConfirmed: false,
+          isEditing: false
         },
         {
           name: 'Nic',
-          isConfirmed: true
+          isConfirmed: true,
+          isEditing: true
         }
       ]
     };
@@ -23,15 +25,23 @@ class App extends Component {
     return this.state.guests.length;
   }
 
-  toggleConfirmationAt(index, event) {
+  toggleGuestPropertyAt(property, index) {
     this.setState((prevState, props) => {
       const guest = prevState.guests[index];
-      guest.isConfirmed = !guest.isConfirmed;
+      guest[property] = !guest[property]
 
       return {
         guest: prevState.guest
       };
     });
+  }
+
+  toggleConfirmationAt(index) {
+    this.toggleGuestPropertyAt('isConfirmed', index);
+  }
+
+  toggleEditingAt(index) {
+    this.toggleGuestPropertyAt('isEditing', index);
   }
 
   render() {
@@ -71,6 +81,7 @@ class App extends Component {
           <GuestList
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
+            toggleEditingAt={this.toggleEditingAt.bind(this)}
           />
         </div>
       </div>

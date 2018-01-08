@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Guest from './Guest';
 
 function GuestList(props) {
@@ -10,7 +11,9 @@ function GuestList(props) {
           key={index}
           name={guest.name}
           isConfirmed={guest.isConfirmed}
-          handleConfirmation={event => props.toggleConfirmationAt(index, event)}
+          isEditing={guest.isEditing}
+          handleConfirmation={event => props.toggleConfirmationAt(index)}
+          handleEditing={event => props.toggleEditingAt(index)}
         />
       ))}
     </ul>
@@ -20,9 +23,11 @@ function GuestList(props) {
 GuestList.propTypes = {
   guests: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
-    isConfirmed: PropTypes.bool.isRequired
+    isConfirmed: PropTypes.bool.isRequired,
+    isEditing: PropTypes.bool.isRequired
   })).isRequired,
-  toggleConfirmationAt: PropTypes.func.isRequired
+  toggleConfirmationAt: PropTypes.func.isRequired,
+  toggleEditingAt: PropTypes.func.isRequired
 };
 
 export default GuestList;
