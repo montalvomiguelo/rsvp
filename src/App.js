@@ -6,6 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      isFiltered: false,
       guests: [
         {
           name: 'Treasude',
@@ -50,6 +51,12 @@ class App extends Component {
     this.toggleGuestPropertyAt('isEditing', index);
   }
 
+  toggleFilter() {
+    this.setState((prevState, props) => ({
+      isFiltered: !prevState.isFiltered
+    }));
+  }
+
   render() {
     return (
       <div className="App">
@@ -65,7 +72,11 @@ class App extends Component {
           <div>
             <h2>Invitees</h2>
             <label>
-              <input type="checkbox" /> Hide those who haven't responded
+              <input
+                type="checkbox"
+                onChange={this.toggleFilter.bind(this)}
+                checked={this.state.isFiltered}
+              /> Hide those who haven't responded
             </label>
           </div>
           <table className="counter">
@@ -89,6 +100,7 @@ class App extends Component {
             toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
             toggleEditingAt={this.toggleEditingAt.bind(this)}
             setNameAt={this.setNameAt.bind(this)}
+            isFiltered={this.state.isFiltered}
           />
         </div>
       </div>
