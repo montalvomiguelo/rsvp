@@ -12,14 +12,14 @@ function GuestList(props) {
         .filter(guest => !props.isFiltered || guest.isConfirmed)
         .map((guest, index) => (
           <Guest
-            key={index}
+            key={guest.id}
             name={guest.name}
             isConfirmed={guest.isConfirmed}
             isEditing={guest.isEditing}
-            handleConfirmation={event => props.toggleConfirmationAt(index)}
-            handleEditing={event => props.toggleEditingAt(index)}
-            handleRemove={event => props.removeGuestsAt(index)}
-            setName={name => props.setNameAt(name, index)}
+            handleConfirmation={event => props.toggleConfirmationAt(guest.id)}
+            handleEditing={event => props.toggleEditingAt(guest.id)}
+            handleRemove={event => props.removeGuestsAt(guest.id)}
+            setName={name => props.setNameAt(name, guest.id)}
           />
       ))}
     </ul>
@@ -30,7 +30,8 @@ GuestList.propTypes = {
   guests: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string.isRequired,
     isConfirmed: PropTypes.bool.isRequired,
-    isEditing: PropTypes.bool.isRequired
+    isEditing: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired
   })).isRequired,
   toggleConfirmationAt: PropTypes.func.isRequired,
   toggleEditingAt: PropTypes.func.isRequired,

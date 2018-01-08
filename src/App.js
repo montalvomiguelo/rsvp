@@ -10,23 +10,15 @@ class App extends Component {
     this.state = {
       isFiltered: false,
       pendingGuest: "",
-      guests: [
-        {
-          name: 'Treasude',
-          isConfirmed: false,
-          isEditing: false
-        },
-        {
-          name: 'Nic',
-          isConfirmed: true,
-          isEditing: true
-        }
-      ]
+      guests: []
     };
+
+    this.lastId = 1;
   }
 
-  setNameAt(name, index) {
-    const guest = this.state.guests[index];
+
+  setNameAt(name, key) {
+    const guest = this.state.guests.find(g => g.id === key);
     guest.name = name;
     this.setState(this.state);
   }
@@ -35,9 +27,9 @@ class App extends Component {
     return this.state.guests.length;
   }
 
-  toggleGuestPropertyAt(property, index) {
+  toggleGuestPropertyAt(property, id) {
     this.setState((prevState, props) => {
-      const guest = prevState.guests[index];
+      const guest = prevState.guests.find(g => g.id === id)
       guest[property] = !guest[property]
 
       return {
@@ -70,10 +62,13 @@ class App extends Component {
     event.preventDefault();
 
     this.setState((prevState, props) => {
+      const id = this.newGuestId();
+
       prevState.guests.unshift({
         name: this.state.pendingGuest,
         isEditing: false,
-        isConfirmed: false
+        isConfirmed: false,
+        id: id
       });
 
       return {
@@ -83,7 +78,17 @@ class App extends Component {
     });
   }
 
-  removeGuestsAt(index) {
+  newGuestId() {
+    const id = this.lastId;
+
+    this.lastId++;
+
+    return id;
+  }
+
+  removeGuestsAt(id) {
+    const guest = this.state.guests.find(g => g.id === id);
+    const index = this.state.guests.indexOf(guest);
     this.state.guests.splice(index, 1);
     this.setState(this.state);
   }
