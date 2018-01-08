@@ -88,7 +88,21 @@ class App extends Component {
     this.setState(this.state);
   }
 
+  getTotalGuests() {
+    return this.state.guests.length
+  }
+
+  getAttendingGuests() {
+    return this.state.guests.reduce((accumulator, guest) => {
+      return guest.isConfirmed ? accumulator + 1 : accumulator;
+    }, 0);
+  }
+
   render() {
+    const totalGuests = this.getTotalGuests();
+    const totalAttending = this.getAttendingGuests();
+    const totalUnconfirmed = totalGuests - totalAttending;
+
     return (
       <div className="App">
        <header>
@@ -115,7 +129,11 @@ class App extends Component {
               /> Hide those who haven't responded
             </label>
           </div>
-          <Counter guests={this.state.guests} />
+          <Counter
+            totalGuests={totalGuests}
+            totalAttending={totalAttending}
+            totalUnconfirmed={totalUnconfirmed}
+          />
           <GuestList
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
