@@ -81,6 +81,11 @@ class App extends Component {
     });
   }
 
+  removeGuestsAt(index) {
+    this.state.guests.splice(index, 1);
+    this.setState(this.state);
+  }
+
   render() {
     return (
       <div className="App">
@@ -128,6 +133,7 @@ class App extends Component {
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
             toggleEditingAt={this.toggleEditingAt.bind(this)}
+            removeGuestsAt={this.removeGuestsAt.bind(this)}
             setNameAt={this.setNameAt.bind(this)}
             isFiltered={this.state.isFiltered}
           />
