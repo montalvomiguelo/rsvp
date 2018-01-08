@@ -21,6 +21,12 @@ class App extends Component {
     };
   }
 
+  setNameAt(name, index) {
+    const guest = this.state.guests[index];
+    guest.name = name;
+    this.setState(this.state);
+  }
+
   getTotalInvited() {
     return this.state.guests.length;
   }
@@ -82,6 +88,7 @@ class App extends Component {
             guests={this.state.guests}
             toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
             toggleEditingAt={this.toggleEditingAt.bind(this)}
+            setNameAt={this.setNameAt.bind(this)}
           />
         </div>
       </div>
