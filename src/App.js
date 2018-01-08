@@ -7,6 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
       isFiltered: false,
+      pendingGuest: "",
       guests: [
         {
           name: 'Treasude',
@@ -57,14 +58,42 @@ class App extends Component {
     }));
   }
 
+  handleInputChange(field) {
+    return (event) => this.setState({
+      [field]: event.target.value
+    });
+  }
+
+  newsGuestSubmitHandler(event) {
+    event.preventDefault();
+
+    this.setState((prevState, props) => {
+      prevState.guests.push({
+        name: this.state.pendingGuest,
+        isEditing: false,
+        isConfirmed: false
+      });
+
+      return {
+        guests: prevState.guests,
+        pendingGuest: ''
+      }
+    });
+  }
+
   render() {
     return (
       <div className="App">
        <header>
           <h1>RSVP</h1>
           <p>A Treehouse App</p>
-          <form>
-              <input type="text" value="Safia" placeholder="Invite Someone" />
+          <form onSubmit={this.newsGuestSubmitHandler.bind(this)}>
+            <input
+              type="text"
+              value={this.state.pendingGuest}
+              placeholder="Invite Someone"
+              onChange={this.handleInputChange('pendingGuest')}
+            />
               <button type="submit" name="submit" value="submit">Submit</button>
           </form>
         </header>
