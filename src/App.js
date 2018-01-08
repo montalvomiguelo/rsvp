@@ -68,7 +68,7 @@ class App extends Component {
     event.preventDefault();
 
     this.setState((prevState, props) => {
-      prevState.guests.push({
+      prevState.guests.unshift({
         name: this.state.pendingGuest,
         isEditing: false,
         isConfirmed: false
@@ -136,6 +136,7 @@ class App extends Component {
             removeGuestsAt={this.removeGuestsAt.bind(this)}
             setNameAt={this.setNameAt.bind(this)}
             isFiltered={this.state.isFiltered}
+            pendingGuest={this.state.pendingGuest}
           />
         </div>
       </div>
