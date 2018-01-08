@@ -23,6 +23,17 @@ class App extends Component {
     return this.state.guests.length;
   }
 
+  toggleConfirmationAt(index, event) {
+    this.setState((prevState, props) => {
+      const guest = prevState.guests[index];
+      guest.isConfirmed = !guest.isConfirmed;
+
+      return {
+        guest: prevState.guest
+      };
+    });
+  }
+
   render() {
     return (
       <div className="App">
@@ -57,7 +68,10 @@ class App extends Component {
               </tr>
             </tbody>
           </table>
-          <GuestList guests={this.state.guests} />
+          <GuestList
+            guests={this.state.guests}
+            toggleConfirmationAt={this.toggleConfirmationAt.bind(this)}
+          />
         </div>
       </div>
     );
